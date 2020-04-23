@@ -24,10 +24,22 @@ describe('SqlCheckinStore', () => {
       await database.query('TRUNCATE TABLE checkins CASCADE;')
     });
     it('stores a checkin', async () => {
-      const checkin = buildCheckin({});
+      const now = new Date('2020-01-01').getTime();
+      const checkin = buildCheckin({createdAt: now});
       await checkinStore.store(checkin);
-      const result = await database.query('select * from checkins');
-      expect(result.rows).to.eql([])
+      const rows = (await database.query('select * from checkins')).rows;
+      expect(rows[0].mood).to.eql(checkin.mood);
+      expect(rows[0].feeling).to.eql(checkin.feeling);
+      expect(rows[0].comment).to.eql(checkin.comment);
+      expect(rows[0].created_at.getTime()).to.eql(checkin.createdAt);
+    });
+    it('returns the checkin if successfully inserted', async () => {
+      const now = new Date('2020-01-01').getTime();
+      const checkin = buildCheckin({createdAt: now});
+      const storeResponse = await checkinStore.store(checkin);
+      expect(storeResponse).to.eql({
+        result: checkin
+      })
     })
   })
 });

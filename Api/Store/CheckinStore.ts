@@ -8,13 +8,15 @@ export enum Feeling {
 export type Checkin = {
   mood: number;
   feeling: Feeling[];
-  comment?: string
+  createdAt: number
+  comment?: string;
 }
 export const buildCheckin = (partialCheckin: Partial<Checkin> = {}): Checkin => {
   const defaultCheckin = {
     feeling: [Feeling.bored],
     mood: 4,
-    comment: 'feeling up and down today'
+    comment: 'feeling up and down today',
+    createdAt: Date.now()
   };
   return {...defaultCheckin, ...partialCheckin}
 };
