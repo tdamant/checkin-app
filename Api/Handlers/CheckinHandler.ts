@@ -8,10 +8,10 @@ export class CheckinHandler implements Handler {
   constructor(private checkinStore: Store<Checkin>) {
   }
   async handle(req: Req): Promise<Res> {
-      return req.method === Method.POST ? this.handlePost(req) : ResOf(400)
+      return req.method === Method.POST ? this.handlePost(req) : this.handleGet(req)
   };
 
-  private async handlePost(req: Req) {
+  private async handlePost(req: Req): Promise<Res> {
     try {
       const parsedBody = JSON.parse(req.bodyString());
       const checkin = parsedBody.checkin;
@@ -42,5 +42,10 @@ export class CheckinHandler implements Handler {
       return feelingValid && moodValid
     }
     return false
+  }
+
+  private async handleGet(_req: Req): Promise<Res> {
+    const storeRes =  await this.checkinStore.findAll();
+    return ResOf(200, JSON.stringify({checkins: storeRes.result}));
   }
 }

@@ -27,7 +27,7 @@ describe('CheckinHandler', () => {
       expect(res.status).to.eql(200);
       const storedCheckins = await store.findAll();
       expect(storedCheckins.result).to.eql([checkin])
-    })
+    });
     it('returns 500 if store errors', async () => {
       const erroringStore = new AlwaysErrorsCheckinStore();
       const handler = new CheckinHandler(erroringStore);
@@ -37,6 +37,19 @@ describe('CheckinHandler', () => {
       const res = await handler.handle(req);
       expect(res.status).to.eql(500);
       expect(res.bodyString()).to.eql('error storing checkin');
+    })
+  });
+  describe('gets', () => {
+    const store = new InMemoryCheckinStore();
+    const handler = new CheckinHandler(store);
+    it('returns all checkins', async () => {
+      const checkin = buildCheckin();
+      await store.store(checkin);
+      const req = ReqOf(Method.GET, '/checkins');
+      const res = await handler.handle(req);
+      const body = JSON.parse(res.bodyString());
+      expect(res.status).to.eql(200);
+      expect(body).to.eql({checkins: [checkin]})
     })
   })
 });

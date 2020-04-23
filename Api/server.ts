@@ -15,6 +15,7 @@ export class Server {
 
     this.server = routes(Method.GET, '/health', async () => ResOf(200))
       .withPost('/checkins', this.checkinHandler.handle.bind(this.checkinHandler))
+      .withGet('/checkins', this.checkinHandler.handle.bind(this.checkinHandler))
       .asServer(new NativeHttpServer(portToUse))
   }
 
