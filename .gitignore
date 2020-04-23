@@ -1,2 +1,4 @@
 .idea
 node_modules
+./checkin-api/pnp
+./checkin-api/pnp.js
