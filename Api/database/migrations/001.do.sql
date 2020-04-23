@@ -1,0 +1,3 @@
+CREATE TABLE checkin (
+  id VARCHAR PRIMARY KEY
+)
