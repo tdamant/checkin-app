@@ -42,14 +42,22 @@ describe('CheckinHandler', () => {
   describe('gets', () => {
     const store = new InMemoryCheckinStore();
     const handler = new CheckinHandler(store);
-    it('returns all checkins', async () => {
-      const checkin = buildCheckin();
-      await store.store(checkin);
-      const req = ReqOf(Method.GET, '/checkins');
+    it('returns 400 if no user is give', async () => {
+      const req = ReqOf(Method.GET, `/checkins`);
+      const res = await handler.handle(req);
+      expect(res.status).to.eql(400);
+      expect(res.bodyString()).to.eql('no userId provided')
+    });
+    it('returns all checkin from specified user', async () => {
+      const checkinRightUser = buildCheckin({userId: 'fake-user-id'});
+      const checkinWrongUser = buildCheckin({userId: 'another-user-id'});
+      await store.store(checkinRightUser);
+      await store.store(checkinWrongUser);
+      const req = ReqOf(Method.GET, `/checkins?userId=${checkinRightUser.userId}`);
       const res = await handler.handle(req);
       const body = JSON.parse(res.bodyString());
       expect(res.status).to.eql(200);
-      expect(body).to.eql({checkins: [checkin]})
+      expect(body).to.eql({checkins: [checkinRightUser]})
     })
   })
 });

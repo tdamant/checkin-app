@@ -44,8 +44,22 @@ export class CheckinHandler implements Handler {
     return false
   }
 
-  private async handleGet(_req: Req): Promise<Res> {
-    const storeRes =  await this.checkinStore.findAll();
-    return ResOf(200, JSON.stringify({checkins: storeRes.result}));
+  private async handleGet(req: Req): Promise<Res> {
+    const userId = req.queries['userId'];
+    if(!userId) {
+      return ResOf(400, 'no userId provided')
+    }
+    try {
+      const storeRes =  await this.checkinStore.findAll();
+      if(storeRes.error || !storeRes.result) {
+        return ResOf(500, 'failed to get checkins from db')
+      }
+      // TODO filter in sql
+      const checkinsFromUser = storeRes.result.filter(checkin => userId === checkin.userId);
+      return ResOf(200, JSON.stringify({checkins: checkinsFromUser}));
+    } catch (e) {
+      return ResOf(500, 'error getting checkins from database')
+    }
+
   }
 }
