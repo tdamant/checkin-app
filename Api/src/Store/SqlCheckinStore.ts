@@ -9,12 +9,13 @@ export class SqlCheckinStore implements Store<Checkin> {
   async findAll(): Promise<{ result: Checkin[] | undefined; error?: string }> {
     const sql = `SELECT * FROM checkins`;
     const rows = (await this.db.query(sql)).rows;
-    const checkins = rows.map(({mood, created_at, feeling, comment}) => (
+    const checkins = rows.map(({mood, created_at, feeling, comment, user_id}) => (
       {
         mood,
         createdAt: created_at.getTime(),
         feeling,
-        comment
+        comment,
+        userId: user_id
       }));
     return {result: checkins}
 
@@ -22,14 +23,15 @@ export class SqlCheckinStore implements Store<Checkin> {
 
   async store(checkin: Checkin): Promise<{ result: Checkin | undefined; error?: string }> {
     const id = uuidv4();
-    const sql = `INSERT INTO checkins (id, created_at, mood, feeling, comment) VALUES ( '${id}', to_timestamp(${checkin.createdAt / 1000}),${checkin.mood}, '{${checkin.feeling}}', '${checkin.comment}') RETURNING *`;
-    const {mood, feeling, created_at, comment} = (await this.db.query(sql)).rows[0];
+    const sql = `INSERT INTO checkins (id, created_at, mood, feeling, comment, user_id) VALUES ( '${id}', to_timestamp(${checkin.createdAt / 1000}),${checkin.mood}, '{${checkin.feeling}}', '${checkin.comment}', '${checkin.userId}') RETURNING *`;
+    const {mood, feeling, created_at, comment, user_id} = (await this.db.query(sql)).rows[0];
     return {
       result: {
         mood,
         feeling,
         comment,
-        createdAt: created_at.getTime()
+        createdAt: created_at.getTime(),
+        userId: user_id
       }
     }
   };

@@ -24,7 +24,7 @@ export class PostgresTestServer {
 
   public async startAndGetDb(): Promise<PostgresDatabase> {
     const adminConnectionDetails = await this.start();
-    await new PostgresMigrator(adminConnectionDetails, path.resolve('./database/bootstrap')).migrate();
+    await new PostgresMigrator(adminConnectionDetails, path.resolve('./src/database/bootstrap')).migrate();
     const connectionDetails =  {
       host: 'localhost',
       port: adminConnectionDetails.port,
@@ -33,7 +33,7 @@ export class PostgresTestServer {
       database: 'checkin_store'
     };
 
-    await new PostgresMigrator(connectionDetails, path.resolve('./database/migrations')).migrate();
+    await new PostgresMigrator(connectionDetails, path.resolve('./src/database/migrations')).migrate();
     return new PostgresDatabase(new Pool(connectionDetails));
   }
 

@@ -1,3 +1,5 @@
+import {v4 as uuidv4} from "uuid";
+
 export enum Feeling {
   depressed = 'depressed',
   optimistic = 'optimistic',
@@ -9,6 +11,7 @@ export type Checkin = {
   mood: number;
   feeling: Feeling[];
   createdAt: number
+  userId: string;
   comment?: string;
 }
 export const buildCheckin = (partialCheckin: Partial<Checkin> = {}): Checkin => {
@@ -16,7 +19,8 @@ export const buildCheckin = (partialCheckin: Partial<Checkin> = {}): Checkin => 
     feeling: [Feeling.bored],
     mood: 4,
     comment: 'feeling up and down today',
-    createdAt: Date.now()
+    createdAt: Date.now(),
+    userId: uuidv4()
   };
   return {...defaultCheckin, ...partialCheckin}
 };

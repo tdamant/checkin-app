@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "ts-node main.ts",
-    "test": "mocha '**/*.test.ts' --require ts-node/register"
+    "test": "mocha './src/**/*.test.ts' --require ts-node/register"
   },
   "dependencies": {
     "http4js": "^5.0.3",

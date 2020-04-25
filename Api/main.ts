@@ -1,7 +1,7 @@
 import {Server} from "./server";
-import {CheckinHandler} from "./Handlers/CheckinHandler";
-import {PostgresTestServer} from "./database/postgres/PostgresTestServer";
-import {SqlCheckinStore} from "./Store/SqlCheckinStore";
+import {CheckinHandler} from "./src/Handlers/CheckinHandler";
+import {PostgresTestServer} from "./src/database/postgres/PostgresTestServer";
+import {SqlCheckinStore} from "./src/Store/SqlCheckinStore";
 
 const start = async () => {
   const testPostgresServer = new PostgresTestServer();

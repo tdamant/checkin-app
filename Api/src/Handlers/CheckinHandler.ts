@@ -1,4 +1,4 @@
-import {Handler} from "../server";
+import {Handler} from "../../server";
 import {Res, ResOf} from "http4js/core/Res";
 import {Req} from "http4js/core/Req";
 import {Method} from "http4js/core/Methods";
@@ -39,7 +39,7 @@ export class CheckinHandler implements Handler {
       }, true);
       //todo change 0 and 7 to constants
       const moodValid = typeof checkin.mood === "number" && checkin.mood > 0 && checkin.mood < 8;
-      return feelingValid && moodValid
+      return feelingValid && moodValid && !!checkin.createdAt && !!checkin.userId
     }
     return false
   }
