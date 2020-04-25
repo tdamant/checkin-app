@@ -1,15 +1,23 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import './App.css';
+import {SubmitCheckin} from "./components/submitCheckin";
+import {BrowserRouter, Route} from "react-router-dom";
+import {ViewResults} from "./components/viewResults";
 
 function App() {
+  //I would want to add an actual login flow but that's outside the scope of this feature
+  const userId = 'fake-user-id';
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Route exact path={'/'}>
+        <Fragment>
+          <SubmitCheckin userId={userId}/>
+        </Fragment>
+      </Route>
+      <Route exact path={'/results'}>
+        <ViewResults/>
+      </Route>
+    </BrowserRouter>
   );
 }
 
