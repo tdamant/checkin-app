@@ -48,16 +48,29 @@ describe('CheckinHandler', () => {
       expect(res.status).to.eql(400);
       expect(res.bodyString()).to.eql('no userId provided')
     });
-    it('returns all checkin from specified user', async () => {
-      const checkinRightUser = buildCheckin({userId: 'fake-user-id'});
+    it('returns all checkin from specified user along with median mood', async () => {
+      const userId = 'fake-user-id';
+      const userCheckins = [...Array(5)].map(() => buildCheckin({userId}));
       const checkinWrongUser = buildCheckin({userId: 'another-user-id'});
-      await store.store(checkinRightUser);
+      const moods = userCheckins.map(checkin => checkin.mood).sort((a, b) => a-b);
+      await store.storeAll(userCheckins);
       await store.store(checkinWrongUser);
-      const req = ReqOf(Method.GET, `/checkins?userId=${checkinRightUser.userId}`);
+
+      const req = ReqOf(Method.GET, `/checkins?userId=${userId}`);
       const res = await handler.handle(req);
       const body = JSON.parse(res.bodyString());
+
       expect(res.status).to.eql(200);
-      expect(body).to.eql({checkins: [checkinRightUser]})
+      expect(body).to.eql({checkins: userCheckins, medianMood: moods[2]})
+    });
+    it('handles no checkins existing', async () => {
+      const userId = 'non-existent-user';
+      const req = ReqOf(Method.GET, `/checkins?userId=${userId}`);
+      const res = await handler.handle(req);
+      const body = JSON.parse(res.bodyString());
+
+      expect(res.status).to.eql(200);
+      expect(body).to.eql({checkins: []})
     })
   })
 });

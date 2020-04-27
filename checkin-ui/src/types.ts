@@ -20,5 +20,5 @@ export type Checkin = {
 
 export type CheckinSummary = {
   checkins: Checkin[];
-  medianMood: number
+  medianMood?: number
 }
