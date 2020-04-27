@@ -4,10 +4,10 @@ export const moodRange = {
 };
 
 export enum Feeling {
-  depressed = 'depressed',
-  optimistic = 'optimistic',
-  bored = 'bored',
-  happy = 'happy'
+  depressed = 'Depressed',
+  optimistic = 'Optimistic',
+  bored = 'Bored',
+  happy = 'Happy'
 }
 
 export type Checkin = {

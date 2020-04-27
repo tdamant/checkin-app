@@ -14,7 +14,7 @@ export class SqlCheckinStore implements Store<Checkin> {
         mood,
         createdAt: created_at.getTime(),
         feeling,
-        comment,
+        comment: comment || undefined,
         userId: user_id
       }));
     return {result: checkins}
@@ -23,7 +23,7 @@ export class SqlCheckinStore implements Store<Checkin> {
 
   async store(checkin: Checkin): Promise<{ result: Checkin | undefined; error?: string }> {
     const id = uuidv4();
-    const sql = `INSERT INTO checkins (id, created_at, mood, feeling, comment, user_id) VALUES ( '${id}', to_timestamp(${checkin.createdAt / 1000}),${checkin.mood}, '{${checkin.feeling}}', '${checkin.comment}', '${checkin.userId}') RETURNING *`;
+    const sql = `INSERT INTO checkins (id, created_at, mood, feeling, comment, user_id) VALUES ( '${id}', to_timestamp(${checkin.createdAt / 1000}),${checkin.mood}, '{${checkin.feeling}}', '${checkin.comment || ''}', '${checkin.userId}') RETURNING *`;
     const {mood, feeling, created_at, comment, user_id} = (await this.db.query(sql)).rows[0];
     return {
       result: {

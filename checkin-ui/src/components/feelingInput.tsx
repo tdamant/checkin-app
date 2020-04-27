@@ -27,7 +27,7 @@ const FeelingOption = ({feeling, handleChange}: { feeling: string, handleChange:
   return (
     <StyledInput>
       <label>
-        {feeling[0].toUpperCase() + feeling.slice(1)}
+        {feeling}
         <InputContainer className={INPUT_CLASS} type='checkbox' value={feeling} onChange={handleChange}/>
       </label>
     </StyledInput>

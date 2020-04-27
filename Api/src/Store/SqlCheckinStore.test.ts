@@ -40,14 +40,21 @@ describe('SqlCheckinStore', function () {
       result: checkin
     })
   });
-  it('finds all checkins', async () => {
+  it('finds all checkins and strips out undefined comments', async () => {
     const now = new Date('2020-01-01').getTime();
     const then = new Date('2020-02-01').getTime();
     const checkin1 = buildCheckin({createdAt: now});
-    const checkin2 = buildCheckin({createdAt: then});
+    const checkin2 = buildCheckin({createdAt: then, comment: undefined});
     await checkinStore.store(checkin1);
     await checkinStore.store(checkin2);
     const storeResponse = await checkinStore.findAll();
-    expect(storeResponse.result).to.eql([checkin1, checkin2])
+    expect(storeResponse.result).to.eql([checkin1,
+      {
+        createdAt: checkin2.createdAt,
+        mood: checkin2.mood,
+        feeling: checkin2.feeling,
+        userId: checkin2.userId,
+        comment: undefined
+      }])
   })
 });

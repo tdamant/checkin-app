@@ -28,12 +28,12 @@ export const ViewResults = ({userId}: {userId: string}) => {
   const getCheckinsFromApi = async () => {
     setIsLoading(true);
     setTimeout(async () => {
-      const checkinSummary = await fetchCheckins(userId);
+      const response = await fetchCheckins(userId);
       setIsLoading(false);
-      if(checkinSummary) {
-        return setCheckinSummary(checkinSummary)
+      if(response.error) {
+        return setError(true)
       }
-      setError(true)
+      setCheckinSummary(response.result)
     }, 1000);
   };
 

@@ -2,8 +2,8 @@ import {Handler} from "../../server";
 import {Res, ResOf} from "http4js/core/Res";
 import {Req} from "http4js/core/Req";
 import {Method} from "http4js/core/Methods";
-import {Checkin, Feeling, Store} from "../Store/CheckinStore";
-import {CheckinSummary, moodRange} from "../../../checkin-ui/src/types";
+import {Checkin, Store} from "../Store/CheckinStore";
+import {CheckinSummary, Feeling, moodRange} from "../../../checkin-ui/src/types";
 import {getMedian} from "../utils/stats";
 
 export class CheckinHandler implements Handler {

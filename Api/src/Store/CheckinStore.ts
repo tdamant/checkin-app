@@ -1,12 +1,5 @@
 import {v4 as uuidv4} from "uuid";
-import {moodRange} from "../../../checkin-ui/src/types";
-
-export enum Feeling {
-  depressed = 'depressed',
-  optimistic = 'optimistic',
-  bored = 'bored',
-  happy = 'happy'
-}
+import {Feeling, moodRange} from "../../../checkin-ui/src/types";
 
 export type Checkin = {
   mood: number;

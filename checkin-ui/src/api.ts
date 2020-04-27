@@ -9,14 +9,16 @@ export const saveCheckin = async (checkin: Checkin): Promise<{ saved: boolean }>
 };
 
 
-export const fetchCheckins = async (userId: string): Promise<CheckinSummary | undefined> => {
+export const fetchCheckins = async (userId: string): Promise<{result?: CheckinSummary, error?: string}> => {
   try {
     const apiResponse = await fetch(`/checkins?userId=${userId}`, {method: 'GET'});
-    if (apiResponse.status !== 200) {
-      return undefined
+    const status = apiResponse.status;
+    if (status !== 200) {
+      return {error: `non 200 status code from api: ${status}`}
     }
     const {checkins, medianMood} = await apiResponse.json();
-    const validData = !!checkins.length && !!medianMood;
-    return validData ? {checkins, medianMood} : undefined
-  } catch (ignore) {}
+    return {result: {checkins, medianMood}}
+  } catch (e) {
+    return {error: e}
+  }
 };
