@@ -27,7 +27,7 @@ export const MoodInput = ({setMoodFn}: {setMoodFn: (mood: number) => void}) => {
 
   return (
   <Mood>
-    <h4> What is your mood? </h4>
+    <h4> How are you doing today? </h4>
     <Input>
       <FaRegSadTear size='4em' style={{padding: 32}}/>
       <InputSlider axis='x' xmax={moodRange.max} xmin={moodRange.min} x={rangeInput} onChange={({x}) => setRangeInput(x)}/>

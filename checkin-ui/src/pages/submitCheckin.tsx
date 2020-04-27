@@ -44,7 +44,7 @@ export const SubmitCheckin = ({userId}: { userId: string }) => {
     return setFeeling && !!input.mood && !!input.userId
   };
 
-  const submitCheckin = async () => {
+  const save = async () => {
     const isValid = validateInput(checkinInput);
     if (!isValid) {
       alert('Please enter your mood (remember to hit set) and choose one or more of the feelings')
@@ -67,7 +67,7 @@ export const SubmitCheckin = ({userId}: { userId: string }) => {
         setCheckinInput({...checkinInput, feeling})
       }}/>
       <Comment onChange={handleCommentChange} placeholder={'Any comments?'}/>
-      <GenericButton onClick={submitCheckin} text='Submit'/>
+      <GenericButton onClick={save} text='Save'/>
       <GenericButton dimensions={{height: 48}} onClick={() => history.push('/results')} text='View previous checkins'/>
     </Container>
   )

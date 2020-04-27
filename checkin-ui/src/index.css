@@ -1,5 +1,5 @@
 body {
-  margin: 0;
+  margin: 16px;
   font-family: 'Lato', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -9,9 +9,4 @@ h4 {
   font-size: 24px;
   font-weight: lighter;
   margin: 8px;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
 }
