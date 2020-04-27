@@ -34,7 +34,7 @@ export const ViewResults = ({userId}: {userId: string}) => {
         return setError(true)
       }
       setCheckinSummary(response.result)
-    }, 1000);
+    }, 500);
   };
 
   useEffect(() => {
@@ -45,7 +45,7 @@ export const ViewResults = ({userId}: {userId: string}) => {
       {isLoading && <LoadingSpinner/>}
       {error && <Error>Oops Something went wrong - please try again later!</Error>}
       {checkinSummary && <DisplayCheckins checkinSummary={checkinSummary}/>}
-      {!isLoading && <GenericButton css='width: 200px;'onClick={() => history.push('/')} text='Submit another checkin'/>}
+      {!isLoading && <GenericButton dimensions={{width: 200}} onClick={() => history.push('/')} text='Submit another checkin'/>}
     </Container>
   )
 };

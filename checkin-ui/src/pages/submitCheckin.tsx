@@ -68,6 +68,7 @@ export const SubmitCheckin = ({userId}: { userId: string }) => {
       }}/>
       <Comment onChange={handleCommentChange} placeholder={'Any comments?'}/>
       <GenericButton onClick={submitCheckin} text='Submit'/>
+      <GenericButton dimensions={{height: 48}} onClick={() => history.push('/results')} text='View previous checkins'/>
     </Container>
   )
 };

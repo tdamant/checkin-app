@@ -4,6 +4,8 @@ import styled from "styled-components";
 
 const Container = styled.div`
   margin: 24px;
+  width: 650px;
+  text-align: center;
 `;
 
 const AllCheckins = styled.div`
@@ -14,30 +16,43 @@ const AllCheckins = styled.div`
   margin: 24px auto;
 `;
 
-const GridCell = styled.div<{ columnNumber: number }>`
+const GridCell = styled.div<{ columnNumber: number, borderBottom?: boolean }>`
   margin-right: 8px;
   grid-column: ${props => props.columnNumber} / ${props => props.columnNumber};
+  ${props => props.borderBottom ? 'border-bottom: 1px solid grey;' : ''}
+`;
+
+const Summary = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
 `;
 
 const CheckinGridHeaders = () => {
   return (
     <Fragment>
-      <GridCell columnNumber={1}>Created At</GridCell>
-      <GridCell columnNumber={2}>Mood (1 - 7)</GridCell>
-      <GridCell columnNumber={3}>Feeling</GridCell>
-      <GridCell columnNumber={4}>Comment</GridCell>
+      <GridCell borderBottom={true} columnNumber={1}>Created At</GridCell>
+      <GridCell borderBottom={true} columnNumber={2}>Mood (1 - 7)</GridCell>
+      <GridCell borderBottom={true} columnNumber={3}>Feeling</GridCell>
+      <GridCell borderBottom={true} columnNumber={4}>Comment</GridCell>
     </Fragment>
   )
 };
 
 
 export const DisplayCheckins = ({checkinSummary}: { checkinSummary: CheckinSummary }) => {
-  console.log(checkinSummary);
-  const median = checkinSummary.medianMood || 'N/A';
   return (
     <Container>
-      <div>{`Number of checkins: ${checkinSummary.checkins.length}`}</div>
-      <div>{`Median mood: ${median}`}</div>
+      <Summary>
+        <div>
+          <h2>Number of checkins:</h2>
+          <h2>{checkinSummary.checkins.length}</h2>
+        </div>
+        <div>
+          <h2>Median mood:</h2>
+          <h2>{checkinSummary.medianMood ? `${checkinSummary.medianMood}/7` : 'N/A'}</h2>
+        </div>
+      </Summary>
       <AllCheckins>
         <CheckinGridHeaders/>
         {checkinSummary.checkins.map((checkin: Checkin, index) => {

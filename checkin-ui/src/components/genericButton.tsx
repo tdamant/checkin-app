@@ -1,20 +1,25 @@
 import styled from "styled-components";
 import React from "react";
 
-const StyledButton = styled.button<{css?: string}>`
-  height: 24px; 
-  width: 100px; 
+const StyledButton = styled.button<{height?: number, width?: number}>`
+  height: ${props => props.height || '24'}px;  
+  width: ${props => props.width || '150'}px;
   border-radius: 6px;
   font-size: 14px;
   font-family: 'Lato', sans-serif;
   margin: 8px;
-  ${props => props.css}
 `;
 
-type GenericButtonProps = { text: string, onClick: (e: React.MouseEvent<HTMLButtonElement>) => void, css?: string };
+type GenericButtonProps = {
+  text: string,
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void,
+  dimensions?: {width?: number, height?: number}
+};
 
-export const GenericButton = ({text, onClick, css}: GenericButtonProps) => {
+export const GenericButton = ({text, onClick, dimensions}: GenericButtonProps) => {
   return (
-    <StyledButton onClick={onClick} css={css}>{text}</StyledButton>
+    <StyledButton onClick={onClick} width={dimensions?.width} height={dimensions?.height}>
+      {text}
+    </StyledButton>
   )
 };

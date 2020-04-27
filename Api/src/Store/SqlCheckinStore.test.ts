@@ -40,7 +40,7 @@ describe('SqlCheckinStore', function () {
       result: checkin
     })
   });
-  it('finds all checkins and strips out undefined comments', async () => {
+  it('finds all checkins deals with undefined comments', async () => {
     const now = new Date('2020-01-01').getTime();
     const then = new Date('2020-02-01').getTime();
     const checkin1 = buildCheckin({createdAt: now});
