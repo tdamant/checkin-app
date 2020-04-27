@@ -1,6 +1,6 @@
-##Running the app
+## Running the app
 The app is divided into an Api and Ui
-###Api:
+### Api:
 You need to have docker running on your machine for the api to work then:<br>
 `cd Api` <br>
 `yarn`<br>
@@ -8,13 +8,13 @@ You need to have docker running on your machine for the api to work then:<br>
 To test:<br>
 `yarn test` 
 
-###Ui:
+### Ui:
 `cd checkin-ui` <br>
 `yarn`<br>
 `yarn start`<br>
 
 
-##Improvements and considerations
+## Improvements and considerations
 With the time I spent on the app (around a days work) I focused on functionality and making it extensible and easy to change.
 As a result I spent less time on styling so this would be a good next area to focus on.
 Other considerations:
