@@ -1,8 +1,7 @@
 import React, {Fragment} from 'react';
-import './App.css';
-import {SubmitCheckin} from "./components/submitCheckin";
+import {SubmitCheckin} from "./pages/submitCheckin";
 import {BrowserRouter, Route} from "react-router-dom";
-import {ViewResults} from "./components/viewResults";
+import {ViewResults} from "./pages/viewResults";
 
 function App() {
   //I would want to add an actual login flow but that's outside the scope of this feature
@@ -15,7 +14,7 @@ function App() {
         </Fragment>
       </Route>
       <Route exact path={'/results'}>
-        <ViewResults/>
+        <ViewResults userId={userId}/>
       </Route>
     </BrowserRouter>
   );
