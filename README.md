@@ -1,7 +1,7 @@
 ## Running the app
 The app is divided into an Api and Ui
 ### Api:
-You need to have docker running on your machine for the api to work then:<br>
+You need to have the docker daemon running on your machine for the api to work then:<br>
 `cd Api` <br>
 `yarn`<br>
 `yarn start`<br>
